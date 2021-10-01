@@ -22,7 +22,7 @@ class BooksController < ApplicationController
   # POST /books or /books.json
   def create
     @book = Book.new(book_params)
-
+    flash[:notice] =  "Book is being created"
     respond_to do |format|
       if @book.save
         format.html { redirect_to @book, notice: "Book was successfully created." }
@@ -36,6 +36,8 @@ class BooksController < ApplicationController
 
   # PATCH/PUT /books/1 or /books/1.json
   def update
+
+    flash[:notice] =  "Book is updating"
     respond_to do |format|
       if @book.update(book_params)
         format.html { redirect_to @book, notice: "Book was successfully updated." }
@@ -53,7 +55,10 @@ class BooksController < ApplicationController
   end
 
   def destroy
+    @book = Book.find(params[:id])
     @book.destroy
+    flash[:notice] =  "Book was successfully completely destroyed."
+
     respond_to do |format|
       format.html { redirect_to books_url, notice: "Book was successfully destroyed." }
       format.json { head :no_content }
